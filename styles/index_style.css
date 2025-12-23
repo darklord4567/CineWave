@@ -1,0 +1,317 @@
+/* --- 1. RESET & BASICS --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #0b0b0e; /* Deeper, richer black */
+    color: #e0e0e0; /* Softer white for text to reduce eye strain */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a { 
+    text-decoration: none; 
+}
+
+/* --- 2. ANIMATIONS --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes neonPulse {
+    0% { text-shadow: 0 0 5px rgba(0, 255, 136, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(0, 255, 136, 1); }
+    100% { text-shadow: 0 0 5px rgba(0, 255, 136, 0.5); }
+}
+
+/* --- 3. NAVBAR --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 5%;
+    background: rgba(11, 11, 14, 0.85); /* Glassmorphism effect */
+    backdrop-filter: blur(10px); /*Blur anything behing nav bar*/
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.logo span {
+    color: #00ff88;
+    animation: neonPulse 3s infinite alternate;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+.nav-links li a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover, 
+.nav-links li a.active {
+    color: #00ff88;
+    animation: neonPulse 3s infinite alternate;
+}
+
+/* --- 4. HEADER --- */
+header {
+    text-align: center;
+    padding: 5rem 1rem 3rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+    
+    /* The Gradient */
+    background: linear-gradient(to right, #fff, #aaa);
+    
+    /* Standard Syntax */
+    background-clip: text;  /* Replaces -webkit-background-clip */
+    color: transparent;     /* Replaces -webkit-text-fill-color */
+    
+}
+
+p.subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* --- 5. MOVIE GRID --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Responsive columns */
+    gap: 2.5rem;
+}
+
+/* CARD ARCHITECTURE */
+.card {
+    background: #15151a;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border by default */
+    
+    /* Layout Logic */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Forces equal height in grid */
+    
+    /* Animation & Transition */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden; /* Ensures content stays inside rounded corners */
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+
+/* THE GLOW  */
+.card:hover {
+    transform: translateY(-8px); /* Lift up */
+    border-color: rgba(0, 255, 136, 0.5); /*Green border on hover */
+    /* Smooth, uniform glow */
+    box-shadow: 0 15px 35px -5px rgba(0, 255, 136, 0.15); 
+}
+
+/* POSTER IMAGE */
+.poster {
+    width: 100%;
+    height: 450px; /* Fixed height for consistency */
+    background-color: #222;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.4s ease;
+}
+
+.card:hover .poster {
+    transform: scale(1.03); /* Slight zoom on image */
+}
+
+/* Image URLs */
+.p1 { background-image: url('https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_FMjpg_UY480_.jpg'); }
+.p2 { background-image: url('https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_.jpg'); }
+.p3 { background-image: url('https://m.media-amazon.com/images/M/MV5BNThiZjA3MjItZGY5Ni00ZmJhLWEwN2EtOTBlYTA4Y2E0M2ZmXkEyXkFqcGc@._V1_FMjpg_UY1929_.jpg'); }
+
+/* CONTENT AREA */
+.card-content {
+    padding: 1.8rem;
+    flex: 1; /* Pushes content to fill space */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #15151a; /* Covers the image zoom overflow */
+    z-index: 2;
+}
+
+.card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    
+    /* --- Fixed height for alignment --- */
+    min-height: 3.5rem;       /* Reserves space for 2 lines of text */
+    display: flex;            /* Allows us to align text inside this box */
+    align-items: center;      /* Vertically centers short titles */
+    
+}
+
+.rating {
+    color: #ffd700;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: rgba(255, 215, 0, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.desc {
+    color: #999;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1; /* Ensures text area pushes button down */
+}
+
+/* --- 6. REFINED WHATSAPP BUTTON --- */
+.btn-wa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 14px;
+    
+    /* Default State: Ghost Button (Outline) */
+    background: transparent;
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto; /* Aligns to bottom */
+}
+
+.btn-wa:hover {
+    /* Hover State: Filled */
+    background: #00ff88;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    transform: translateY(-2px);
+}
+
+/* --- 7. FOOTER --- */
+footer {
+    background: #0b0b0e;
+    color: #555;
+    padding: 3rem;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.footer-links a:hover {
+    color: #00ff88;
+}
+
+/* optimize for mobile */
+
+/* --- MOBILE & TABLET OPTIMIZATION --- */
+@media (max-width: 768px) {
+    
+    /* 1. Stack the Navbar vertically */
+    nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 1rem;
+    }
+    
+    .nav-links {
+        gap: 20px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .nav-links li a {
+        font-size: 1rem; /* Slightly larger touch target */
+    }
+
+    /* 2. Shrink the Big Header Text */
+    header {
+        padding: 3rem 1rem 1.5rem;
+    }
+
+    h1 {
+        font-size: 2.2rem; /* Smaller font prevents wrapping issues */
+        letter-spacing: 0;
+    }
+
+    /* 3. Force Cards into a Single Column */
+    .container {
+        grid-template-columns: 1fr; /* 1 column taking full width */
+        padding: 1rem;
+        gap: 2rem;
+    }
+
+    /* 4. Adjust Card Sizing */
+    .card {
+        height: auto; /* Let height adjust naturally */
+    }
+
+    .poster {
+        height: 350px; /* Slightly shorter images on phone */
+    }
+    
+    .card h2 {
+        font-size: 1.3rem;
+        min-height: auto; /* Remove fixed height on mobile so text flows naturally */
+        margin-bottom: 10px;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+    }
+}
